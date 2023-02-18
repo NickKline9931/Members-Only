@@ -1,0 +1,14 @@
+<h1>Posts</h1>
+<ul>
+    <% @posts.each do |post| %>
+        <li style="list-style:none;"><h2><%= post.title %></h2>
+            <p><%= post.body %></p></li>
+    <% end %>
+</ul>
+
+<%= link_to "+Post", "posts/new" %>
+<% if user_signed_in? %>
+    <p>Hello, <%= current_user.username %></p><%= link_to "Log Out", "sign_out" %>
+<% else %>
+    <p>You are not logged in.</p><%= link_to "Log in", "sign_in" %>
+<% end %>
