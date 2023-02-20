@@ -1,14 +1,32 @@
+<div style="position:relative; bottom:1rem;">
 <h1>Posts</h1>
+<% if !user_signed_in? %>
+<p style="position:relative; bottom:1rem;">(Log in to see post authors.)</p>
+<%= link_to "Log in", "sign_in", style:"position:relative; bottom:1rem;" %>
+<% else %>
+<p style="position:relative; bottom:1rem;">Hello, <%= current_user.username %></p><br />
+<%= link_to "Log Out", "sign_out", style:"position:relative; bottom:2.5rem;" %>
+<% end %>
+</div>
 <ul>
     <% @posts.each do |post| %>
-        <li style="list-style:none;"><h2><%= post.title %></h2>
-            <p><%= post.body %></p></li>
+        <li style="list-style:none; background-color:yellow; position: relative; right:2.75rem; bottom:2rem; height: 8rem; width:98.2vw; border: 0.2rem solid black; box-sizing:border-box; margin-bottom:0.2rem; padding:0;">
+        <% if post.user === current_user %>
+        <%= button_to "X", post_path(post), method: :delete, style:"background-color:red; color:white;" %>
+        <% end %>
+        <div style="display:flex;">
+        <h2 style="position:absolute; left:1.5%; top:4%; text-decoration:underline;"><%= post.title %></h2> 
+        <% if user_signed_in? %><p style="position:absolute; right:5%; top:-10%;">by <%= post.user.username %></p><% end %>
+        </div>
+        <p style ="position: absolute; left:1.7%; top:30%;"><%= post.body %></p></li>
     <% end %>
 </ul>
 
-<%= link_to "+Post", "posts/new" %>
+<div style="position:relative; bottom:1.5rem;">
+<%= link_to "+Post", "posts/new" %><br />
 <% if user_signed_in? %>
-    <p>Hello, <%= current_user.username %></p><%= link_to "Log Out", "sign_out" %>
+    </p><%= link_to "Log Out", "sign_out" %>
 <% else %>
-    <p>You are not logged in.</p><%= link_to "Log in", "sign_in" %>
+    <%= link_to "Log in", "sign_in" %>
 <% end %>
+<div>
